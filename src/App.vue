@@ -1,6 +1,6 @@
 <template>
   <div id="nav">
-    <router-link to="/">Home321 {{process.env.APP_NAME}}</router-link> |
+    <router-link to="/">Home321 {{process.env.VUE_APP_NAME}}</router-link> |
     <router-link to="/about">A12312bout</router-link>
   </div>
   <router-view />
