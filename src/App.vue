@@ -1,10 +1,22 @@
 <template>
   <div id="nav">
-    <router-link to="/">Home321 {{process.env.VUE_APP_NAME}}</router-link> |
+    <router-link to="/">Home321 {{ name }}</router-link> |
     <router-link to="/about">A12312bout</router-link>
   </div>
   <router-view />
 </template>
+
+<script>
+import { defineComponent } from "@vue/runtime-core";
+
+export default defineComponent({
+  data() {
+    return {
+      name: process.env.VUE_APP_NAME,
+    };
+  },
+});
+</script>
 
 <style lang="scss">
 #app {
