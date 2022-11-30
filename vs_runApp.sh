@@ -1,13 +1,9 @@
 #!/bin/sh
 cmd="npm -v"
 $cmd
-status=$?
-if [ $status -eq 0 ]
+if [ $? -ne 0 ]
 then
-        echo "$cmd js installed!"
-else
-        echo "node js not installed!"
-        exit 1
+    exit 1
 fi
 
 pkill -f 'node*.*.serve -s'
@@ -17,4 +13,10 @@ mkdir build/o2vue
 mv dist/index.html build
 mv dist/* build/o2vue
 rm -rf dist
-serve -s build -p 8081 > /dev/null 2>&1 &
+
+echo "serve -s build -p 8081"
+serve -s build -p 8081
+if [ $? -ne 0 ]
+then
+	exit 1
+fi
