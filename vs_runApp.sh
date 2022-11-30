@@ -2,7 +2,7 @@
 node -v
 if [ $? -ne 0 ]
 then
-    exit 64
+    exit 1
 fi
 
 pkill -f 'node*.*.serve -s'
@@ -17,6 +17,6 @@ echo "serve -s build -p 8081"
 serve -v
 if [ $? -ne 0 ]
 then
-	exit 64
+	exit 1
 fi
 serve -s build -p 8081 > /dev/null &
