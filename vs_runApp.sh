@@ -1,5 +1,5 @@
 #!/bin/sh
-cmd="npm -v"
+cmd="node -v"
 $cmd
 if [ $? -ne 0 ]
 then
@@ -15,7 +15,7 @@ mv dist/* build/o2vue
 rm -rf dist
 
 echo "serve -s build -p 8081"
-serve -s build -p 8081
+serve -s build -p 8081 > /dev/null 2>&1
 if [ $? -ne 0 ]
 then
 	exit 1
