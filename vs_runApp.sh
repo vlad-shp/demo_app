@@ -1,4 +1,5 @@
 #!/bin/sh
+echo "node -v"
 node -v
 if [ $? -ne 0 ]
 then
@@ -13,7 +14,7 @@ mv dist/index.html build
 mv dist/* build/o2vue
 rm -rf dist
 
-echo "serve -s build -p 8081"
+echo "serve -v"
 serve -v
 if [ $? -ne 0 ]
 then

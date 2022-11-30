@@ -46,17 +46,28 @@ pipeline {
                     publishers: [
                         sshPublisherDesc(
                             configName: "${Srodowisko}",
-                            verbose: true,
+                            verbose: false,
                             transfers: [
                                 sshTransfer( 
                                     remoteDirectory: '/production/',
-                                    sourceFiles: 'dist/**/*,.env', ),
-                                sshTransfer(
-                                    execCommand: "cd opt/production/ ; ./deploy_app.sh")
+                                    sourceFiles: 'dist/**/*,vs_runApp.sh', )
                             ]
-                        )
+                        ),
+                        sshPublisherDesc(
+                                configName: "${Srodowisko}",
+                                verbose: true,
+                                transfers: [
+                                    sshTransfer(
+                                        execCommand: "cd opt/production/;chmod 744 vs_runApp.sh;./vs_runApp.sh")
+                                ]
+                            )
                     ]
                 )
+                script {
+                   if ('FAILURE'.equals(currentBuild.result)) {
+                        error('Send build artifacts over SSH ERROR!')
+                   }
+                }
             }
         }
     }
