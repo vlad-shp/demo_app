@@ -1,0 +1,63 @@
+pipeline {
+    agent any
+    
+    parameters {
+        string(name: 'Branch',
+            defaultValue: 'cbm_2_9_1',
+            description: 'Wybierz branch')
+        choice(name: 'Srodowisko',
+            choices:'10.35/cbm_master_dev\n25.12/cbm_master_prod\nDEV\ndev2',
+            description: 'Wybierz środowisko')
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                git branch: "${params.Branch}", url: 'https://github.com/vlad-shp/demo_app.git'
+            }
+        }
+        
+        stage('Build') {
+            steps {
+                script {
+                    if(params.RemoveNodeModules) {
+                        sh('rm -rf node_modules')
+                    }
+                }
+                script {
+                    if(params.Srodowisko == 'DEV') {
+                        sh('cp .env_prod .env')
+                    } else {
+                        sh('cp .env_dev .env')
+                    }
+                }
+                nodejs(nodeJSInstallationName: 'NodeJS_16_18_1') {
+                    sh 'npm install'
+                    sh 'npm run build'
+                }
+                
+            }
+        }
+        
+        stage('Deploy') {
+            steps {
+                sshPublisher (
+                    continueOnError: false, failOnError: true,
+                    publishers: [
+                        sshPublisherDesc(
+                            configName: "${Srodowisko}",
+                            verbose: true,
+                            transfers: [
+                                sshTransfer( 
+                                    remoteDirectory: '/production/',
+                                    sourceFiles: 'dist/**/*,.env', ),
+                                sshTransfer(
+                                    execCommand: "cd opt/production/ ; ./deploy_app.sh")
+                            ]
+                        )
+                    ]
+                )
+            }
+        }
+    }
+}
