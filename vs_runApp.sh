@@ -20,4 +20,4 @@ if [ $? -ne 0 ]
 then
 	exit 1
 fi
-serve -s build -p 8081 > /dev/null &
+serve -s build -p 8081 > /dev/null 2>&1 & 

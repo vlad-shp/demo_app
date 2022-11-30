@@ -1,6 +1,6 @@
 <template>
   <div id="nav">
-    <router-link to="/">Home321 {{ name }}</router-link> |
+    <router-link to="/">Home355521 {{ name }}</router-link> |
     <router-link to="/about">A12312bout</router-link>
   </div>
   {{ phoneData }}
