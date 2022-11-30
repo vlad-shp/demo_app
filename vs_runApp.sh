@@ -1,13 +1,13 @@
 #!/bin/sh
-cmb="npm -v"
+cmd="npm -v"
 $cmd
 status=$?
-if [ $status -eq 0 ] 
-then 
-	echo "$cmd"
+if [ $status -eq 0 ]
+then
+        echo "$cmd js installed!"
 else
-	echo "node js not installed!"
-	exit $status
+        echo "node js not installed!"
+        exit 1
 fi
 
 pkill -f 'node*.*.serve -s'
