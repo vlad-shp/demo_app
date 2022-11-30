@@ -2,7 +2,8 @@
 cmb="npm -v"
 $cmd
 status=$?
-if [ $status -eq 0 ] then 
+if [ $status -eq 0 ] 
+then 
 	echo "$cmd"
 else
 	echo "node js not installed!"
