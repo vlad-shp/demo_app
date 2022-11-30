@@ -15,7 +15,7 @@ mv dist/* build/o2vue
 rm -rf dist
 
 echo "serve -s build -p 8081"
-serve -s build -p 8081 > /dev/null 2>&1
+serve -s build -p 8081 > /dev/null &
 if [ $? -ne 0 ]
 then
 	exit 1
